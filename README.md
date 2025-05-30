@@ -35,32 +35,6 @@ Dataset yang digunakan diperoleh dari Kaggle dengan link : [Diabetes Prediction 
 | BMI                          | Indeks Massa Tubuh yang dihitung dari berat dan tinggi badan, digunakan untuk menilai status berat badan pengguna.       |
 | Risk Score                   | Skor risiko diabetes yang dihitung dari berbagai parameter kesehatan pengguna. Digunakan untuk pengelompokan tingkat risiko. |
 
-## Data Preparation
-### Memeriksa Missing Value
-
-![image](https://github.com/user-attachments/assets/c00ec89a-ea56-4a98-992a-b282b7c3a262)
-- Tidak terdapet missing value pada dataset ini
-
-### Memeriksa Data Duplikat
-![image](https://github.com/user-attachments/assets/29947a49-f46c-4852-91f9-0627be9aab6c)
-- Tidak terdapat data duplikat pada dataset ini
-
-### Memeriksa Outlier
-![image](https://github.com/user-attachments/assets/106a3878-a2ba-4ae9-9e26-7f6e85633cc3)
-
-![image](https://github.com/user-attachments/assets/5d659581-5970-4018-a36e-86f8835c2b35)
-Berdasarkan informasi yang diberikan data ini mendapatkan total 22 outlier, dapat disimpulkan bahwa beberapa kolom dalam dataset yang mengandung nilai outlier seperti.
-- Kolom weight memiliki 4 outlier, yang kemungkinan merepresentasikan individu dengan berat badan yang sangat rendah atau sangat tinggi dibandingkan populasi umum.
-- Kolom height juga menunjukkan adanya 2 data yang menyimpang, bisa berasal dari individu yang sangat pendek atau sangat tinggi.
-- Kolom physical_activity memiliki 3 outlier, yang dapat mencerminkan pengguna dengan tingkat aktivitas fisik harian yang jauh lebih rendah atau lebih tinggi dari mayoritas.
-- Kolom blood_glucose memiliki 6 outlier, yang menunjukkan adanya kadar gula darah yang sangat rendah atau sangat tinggi.
-- Kolom bmi mamiliki 8 outlier. Nilai-nilai BMI ekstrem ini dapat mengindikasikan masalah berat badan serius, seperti obesitas parah atau kekurangan gizi.
-
-### Data Cleansing
-![image](https://github.com/user-attachments/assets/e466f500-28e8-4e23-b9df-1ac9e44ce84c)
-
-Kami hanya berfokus pada penghapusan outlier karena tidak adanya missing values dan data duplikat dalam dataset. Proses cleaning ini mengakibatkan berkurangnya jumlah data dari 1000 menjadi 979.
-
 ## EDA
 ### Univariative Analysis
 ![image](https://github.com/user-attachments/assets/b10a0d55-4c57-4a17-b329-1aec61c8a6a6)
@@ -117,7 +91,32 @@ Kesimpulan Umum:
 **Risiko Diabetes vs Tingkat Hidrasi:**
    *   Hampir semua individu dalam dataset memiliki tingkat hidrasi yang "cukup" (nilai 1). Karena sangat sedikit data untuk "hidrasi kurang" (nilai 0), sulit menarik kesimpulan kuat tentang hubungannya dengan risiko diabetes.
 
-## Modelling
+## Data Preparation
+### Memeriksa Missing Value
+
+![image](https://github.com/user-attachments/assets/c00ec89a-ea56-4a98-992a-b282b7c3a262)
+- Tidak terdapet missing value pada dataset ini
+
+### Memeriksa Data Duplikat
+![image](https://github.com/user-attachments/assets/29947a49-f46c-4852-91f9-0627be9aab6c)
+- Tidak terdapat data duplikat pada dataset ini
+
+### Memeriksa Outlier
+![image](https://github.com/user-attachments/assets/106a3878-a2ba-4ae9-9e26-7f6e85633cc3)
+
+![image](https://github.com/user-attachments/assets/5d659581-5970-4018-a36e-86f8835c2b35)
+Berdasarkan informasi yang diberikan data ini mendapatkan total 22 outlier, dapat disimpulkan bahwa beberapa kolom dalam dataset yang mengandung nilai outlier seperti.
+- Kolom weight memiliki 4 outlier, yang kemungkinan merepresentasikan individu dengan berat badan yang sangat rendah atau sangat tinggi dibandingkan populasi umum.
+- Kolom height juga menunjukkan adanya 2 data yang menyimpang, bisa berasal dari individu yang sangat pendek atau sangat tinggi.
+- Kolom physical_activity memiliki 3 outlier, yang dapat mencerminkan pengguna dengan tingkat aktivitas fisik harian yang jauh lebih rendah atau lebih tinggi dari mayoritas.
+- Kolom blood_glucose memiliki 6 outlier, yang menunjukkan adanya kadar gula darah yang sangat rendah atau sangat tinggi.
+- Kolom bmi mamiliki 8 outlier. Nilai-nilai BMI ekstrem ini dapat mengindikasikan masalah berat badan serius, seperti obesitas parah atau kekurangan gizi.
+
+### Data Cleansing
+![image](https://github.com/user-attachments/assets/e466f500-28e8-4e23-b9df-1ac9e44ce84c)
+
+Kami hanya berfokus pada penghapusan outlier karena tidak adanya missing values dan data duplikat dalam dataset. Proses cleaning ini mengakibatkan berkurangnya jumlah data dari 1000 menjadi 979.
+
 ### Data Splitting
 ![image](https://github.com/user-attachments/assets/b76b394a-c75e-4c0f-be8a-452875ce914a)
 
@@ -136,11 +135,65 @@ Setelah dilakukan pembagian, outputnya menunjukkan:
 
 Dataset dibagi menjadi bagian pelatihan dan pengujian. Sebanyak 685 data dialokasikan untuk training, sementara 294 data untuk testing, sehingga total keseluruhan data yang digunakan adalah 979.
 
-![image](https://github.com/user-attachments/assets/1decc4fe-de81-453b-8754-86941eac2134)
 
-Fungsi make_evaluation() adalah alat bantu evaluasi yang lengkap untuk model klasifikasi. Fungsi ini mencetak metrik performa penting dan membuat visualisasi confusion matrix, sehingga sangat berguna untuk analisis kualitas model secara menyeluruh.
+## Modelling
+### Algoritma Random Forest 
+Random Forest Classifier adalah salah satu algoritma machine learning yang termasuk dalam metode ensemble learning, yaitu pendekatan yang menggabungkan beberapa model untuk meningkatkan akurasi dan kestabilan prediksi. Random Forest terdiri dari sejumlah pohon keputusan (decision trees) yang dibangun berdasarkan subset acak dari data pelatihan. Saat melakukan prediksi, setiap pohon akan memberikan “suara” terhadap suatu kelas, dan keputusan akhir ditentukan berdasarkan mayoritas suara (voting) dari seluruh pohon dalam ensemble tersebut.
 
-### Training Model Random Forest
+Model ini memiliki keunggulan dalam mengurangi risiko overfitting, serta mampu menangani data yang kompleks dengan fitur-fitur yang saling berinteraksi. Random Forest juga berguna untuk mengidentifikasi feature importance, yakni fitur mana yang paling berkontribusi terhadap prediksi model.
+
+Dalam implementasi model pada proyek ini, digunakan kode berikut:
+```# === Model Random Forest ===  
+rf_model = RandomForestClassifier(random_state=42)  
+rf_model.fit(X_train, y_train)  
+y_pred_rf = rf_model.predict(X_test)  
+make_evaluation(y_test, y_pred_rf, title="Random Forest")
+```
+
+Parameter yang digunakan adalah:
+*  random_state=42: Parameter ini digunakan untuk menjaga konsistensi dan memastikan bahwa hasil pelatihan model dapat direproduksi. Random Forest melibatkan proses acak dalam pembuatan setiap pohon (misalnya pemilihan subset data dan subset fitur), sehingga dengan menetapkan nilai random_state, hasil yang diperoleh akan selalu sama jika kode dijalankan ulang. Ini penting terutama saat melakukan evaluasi model atau perbandingan antar model.
+
+### Algoritma Desicion Tree
+Decision Tree Classifier adalah algoritma pembelajaran mesin yang berbasis pada struktur pohon untuk melakukan prediksi. Model ini bekerja dengan cara memecah data ke dalam simpul-simpul berdasarkan fitur yang paling informatif, membentuk cabang yang mengarah pada keputusan akhir. Setiap node dalam pohon memuat aturan berbasis fitur, dan proses pemisahan berlanjut hingga mencapai daun (leaf) yang berisi label kelas.
+
+Proses pemisahan data dilakukan dengan tujuan memaksimalkan homogenitas kelas dalam setiap cabang. Untuk mengukur kualitas pemisahan ini, algoritma biasanya menggunakan metrik seperti Gini Impurity (bawaan) atau Entropy. Kelebihan Decision Tree terletak pada interpretabilitasnya yang tinggi, karena hasil model bisa divisualisasikan sebagai diagram pohon yang mudah dipahami.
+
+Dalam implementasi proyek ini, digunakan kode berikut:
+```# === Model Decision Tree ===
+dt_model = DecisionTreeClassifier(random_state=42)
+dt_model.fit(X_train, y_train)
+y_pred_dt = dt_model.predict(X_test)
+make_evaluation(y_test, y_pred_dt, title="Decision Tree")
+```
+
+Parameter yang digunakan adalah:
+*   random_state=42: Parameter ini digunakan untuk menjamin bahwa hasil pelatihan model bisa direproduksi secara konsisten. Sama seperti pada Random Forest, nilai ini menetapkan seed acak yang digunakan oleh algoritma dalam proses pemecahan data dan pembentukan struktur pohon.
+
+## Evaluation
+Dalam proyek ini, metrik evaluasi yang digunakan untuk mengukur performa model adalah Confusion Matrix. Metrik ini dipilih karena sangat relevan untuk kasus klasifikasi multi-kelas seperti prediksi kategori risiko diabetes (Low Risk, Moderate Risk, dan High Risk). Confusion matrix memberikan informasi yang jauh lebih kaya dibandingkan hanya mengandalkan akurasi semata.
+
+### Penjelasan Confusion Matrix
+Confusion matrix merupakan sebuah tabel yang menggambarkan kinerja model klasifikasi dengan membandingkan label yang diprediksi oleh model dengan label sebenarnya. Dalam konteks proyek ini, setiap baris pada confusion matrix menunjukkan jumlah aktual (true labels), sedangkan setiap kolom menunjukkan jumlah prediksi yang dilakukan oleh model.
+![662c42677529a0f4e97e4f96_644aea65cefe35380f198a5a_class_guide_cm08](https://github.com/user-attachments/assets/2cc01981-367c-4de4-bc0f-d8b6e859ae49)
+
+Dengan menggunakan confusion matrix, kita dapat mengevaluasi beberapa aspek penting dari model:
+*  True Positives (TP): Jumlah data yang benar diklasifikasikan ke dalam kelas yang tepat.
+*  False Positives (FP): Jumlah data yang salah diklasifikasikan ke dalam suatu kelas, padahal seharusnya tidak termasuk kelas tersebut.
+*  False Negatives (FN): Jumlah data yang seharusnya termasuk suatu kelas, tetapi diklasifikasikan ke kelas lain oleh model.
+*  True Negatives (TN): Jumlah data yang benar tidak diklasifikasikan ke dalam kelas tertentu.
+
+Selain memberikan gambaran umum terhadap kesalahan klasifikasi, confusion matrix juga menjadi dasar untuk menghitung metrik turunan lainnya, seperti:
+*  Precision: Seberapa akurat model saat memprediksi suatu kelas.
+*  Recall: Seberapa baik model dalam menemukan semua data yang termasuk dalam suatu kelas.
+*  F1-score: Harmoni antara precision dan recall, terutama berguna saat data tidak seimbang antar kelas.
+
+Penggunaan confusion matrix dalam proyek ini memungkinkan kita untuk:
+*  Menilai apakah model bias terhadap kelas tertentu (misalnya hanya bagus di kelas Low Risk, tetapi lemah di High Risk),
+*  Mengidentifikasi klasifikasi yang sering salah, dan
+*  Memberikan dasar untuk penyesuaian parameter atau pemilihan model yang lebih optimal.
+
+### Penerapan Model Random Forest
+
 ![image](https://github.com/user-attachments/assets/a1553646-1a69-42ed-9b9e-aa50eef8072c)
 
 Hasil Training Model Random Forest
@@ -152,7 +205,7 @@ Hasil Training Model Random Forest
    *   Sebagian besar moderate risk dan low risk diklasifikasikan dengan benar.
    *   Terdapat kekeliruan dalam mengklasifikasikan high risk ke moderate risk (11 data).
 
-### Training Model Decision Tree
+### Penerapan Model Decision Tree
 ![image](https://github.com/user-attachments/assets/b92f7469-3589-4b4c-b6a7-033fb6c4b90b)
 
 Hasil Training Model Random Forest
